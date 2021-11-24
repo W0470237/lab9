@@ -5,10 +5,14 @@ MEMORY
     ram (!rx) : ORIGIN = 0x20000000, LENGTH = 32K
 }
 
+_stack_top = ORIGIN(ram) + LENGTH(ram);
+
+ENTRY(_start)
+
 SECTIONS
 {
-    .text :
-    {
+    .text :    {
+    	*(.vectors)
         *(.text)
     } > rom
 
