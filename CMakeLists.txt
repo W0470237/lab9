@@ -10,7 +10,7 @@ set(toolchain "C:/Program Files (x86)/GNU Arm Embedded Toolchain/bin")
 set(CMAKE_C_COMPILER ${toolchain}/arm-none-eabi-gcc.exe)
 #set(CMAKE_ASM_COMPILER ${toolchain}/arm-none-eabi-as)
 
-project(lab8 C ASM)
+project(lab9 C ASM)
 
 set(CMAKE_C_STANDARD 11)
 
@@ -21,9 +21,9 @@ set(CMAKE_ASM_FLAGS_DEBUG "-g3")
 set(CMAKE_C_FLAGS_DEBUG "-g3 -O0")
 
 set(CMAKE_ASM_FLAGS_RELEASE "")
-set(CMAKE_C_FLAGS_RELEASE "-O0 -DNDEBUG")
+set(CMAKE_C_FLAGS_RELEASE "-O0 -DNDEBUG=1")
 
 add_link_options(-T${CMAKE_SOURCE_DIR}/stm32.ld)
 add_link_options(--specs=nosys.specs)
 
-add_executable(lab8.elf main.c startup.s stm32.ld)
+add_executable(lab9.elf main.c startup.s stm32.ld)
