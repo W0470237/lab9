@@ -29,7 +29,18 @@ void print_str(char *str)
 #endif
 }
 
-void setClock()
+void delay(int ms)
+{
+    int count = 0;
+    while(count < ms){
+        if(*STK_CSR & 0x00010000UL)
+        {
+            count++;
+        }
+    }
+}
+
+int main()
 {
 #if NDEBUG
     //change FLASH wait states
@@ -65,10 +76,8 @@ void setClock()
     rcc_cfgr |=  0x00000002UL;
     *RCC_CFGR = rcc_cfgr;
 #endif
-}
 
-void setTimer()
-{
+    //set sysClock to 1ms
     unsigned long stk_rvr = *STK_RVR;
     stk_rvr &= ~0x00FFFFFFUL;
     stk_rvr |= 0x00001F40UL; //8000
@@ -76,26 +85,6 @@ void setTimer()
 
     //enable the systck timer
     *STK_CSR |= 0x00000001;
-}
-
-void delay(int ms)
-{
-    int count = 0;
-    while(count < ms){
-        if(*STK_CSR & 0x00010000UL)
-        {
-            count++;
-        }
-    }
-}
-
-int main()
-{
-    //configure main clock to 64MHz
-    setClock();
-
-    //set sysClock to 1ms
-    setTimer();
 
     //enable GPIOA registers
     // 1 for port A and 4 for port C
